@@ -13,7 +13,11 @@ final class SveaCreateOrderResponse extends AbstractResponse implements Redirect
      */
     public function isSuccessful(): bool
     {
-        return $this->getCode() == 201;
+        /*
+         * HTTP status code 201 indicates that a new Checkout order was created.
+         * HTTP status code 200 indicates that an existing Checkout order was found with the provied clientOrderNumber.
+         */
+        return $this->getCode() == 201 || $this->getCode() == 200;
     }
 }
 
