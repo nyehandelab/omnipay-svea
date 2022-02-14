@@ -16,7 +16,7 @@ class SveaCreateOrderRequest extends AbstractOrderRequest
             'items',
             'currency',
             'locale',
-            'clientOrderNumber', // Perhaps this could be generated in here?
+            'clientOrderNumber',
             'checkoutUri',
             'confirmationUri',
             'termsUrl',
@@ -26,7 +26,7 @@ class SveaCreateOrderRequest extends AbstractOrderRequest
         $data = [
             'countryCode' => $this->getCountryCode(),
             'currency' => $this->getCurrency(),
-            'clientOrderNumber' => rand(10000,30000000),
+            'clientOrderNumber' => $this->getClientOrderNumber(),
             'merchantSettings' => [
                 'CheckoutUri' => $this->getCheckoutUri(),
                 'ConfirmationUri' => $this->getConfirmationUri(),
@@ -70,6 +70,16 @@ class SveaCreateOrderRequest extends AbstractOrderRequest
     public function getCurrency()
     {
         return $this->getParameter('currency');
+    }
+
+    public function setClientOrderNumber($value)
+    {
+        return $this->setParameter('clientOrderNumber', $value);
+    }
+
+    public function getClientOrderNumber()
+    {
+        return $this->getParameter('clientOrderNumber');
     }
 
     public function setCheckoutUri($value)
