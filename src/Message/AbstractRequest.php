@@ -101,8 +101,9 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         // TODO: Examples does not use base16 (dechex) or lowercase (strtolower), so we might be able to remove them.
         $timestamp = gmdate('Y-m-d H:i');
 
+        // 𝑏𝑎𝑠𝑒64(𝑢𝑡𝑓8({𝑐ℎ𝑒𝑐𝑘𝑜𝑢𝑡𝑚𝑒𝑟𝑐ℎ𝑎𝑛𝑡𝑖𝑑}:𝑏𝑎𝑠𝑒16(𝑙𝑜𝑤𝑒𝑟𝑐𝑎𝑠𝑒(𝑠ℎ𝑎512(𝑢𝑡𝑓8({𝑟𝑒𝑞𝑢𝑒𝑠𝑡𝑏𝑜𝑑𝑦}{𝑐ℎ𝑒𝑐𝑘𝑜𝑢𝑡𝑠𝑒𝑐𝑟𝑒𝑡}{𝑡𝑖𝑚𝑒𝑠𝑡𝑎𝑚𝑝}))))))
         $authToken = base64_encode($this->getMerchantId() . ':' .
-            hash('sha512', $data . $this->getCheckoutSecret() . $timestamp));
+            strtolower(hash('sha512', $data . $this->getCheckoutSecret() . $timestamp)));
 
         // $authToken =  base64_encode(
         //     $this->getMerchantId()
