@@ -62,6 +62,25 @@ class SveaItem extends Item
         return $this->setParameter('vatPercent', $value);
     }
 
+    public function getDiscountAmount()
+    {
+        return $this->getParameter('discountAmount');
+    }
+
+    public function setDiscountAmount($value)
+    {
+        return $this->setParameter('discountAmount', $value);
+    }
+
+    public function getDiscountPercent()
+    {
+        return $this->getParameter('discountPercent');
+    }
+
+    public function setDiscountPercent($value)
+    {
+        return $this->setParameter('discountPercent', $value);
+    }
 
     public function getTaxAmount(): int
     {

@@ -95,25 +95,27 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         return $this->getTestMode() ? $this->testEndpoint : $this->liveEndpoint;
     }
 
-    protected function getHeaders()
+    protected function getHeaders(string $data)
     {
         //'Authorization' => $this->getSecretKey(),
         // TODO: Examples does not use base16 (dechex) or lowercase (strtolower), so we might be able to remove them.
         $timestamp = gmdate('Y-m-d H:i');
-        $authToken =  base64(
-            $this->getMerchantId()
-            . ':'
-            . dechex(
-                strtolower(
-                    hash(
-                        'sha512',
-                        $this->getOrderData()
-                        . $this->getCheckoutSecret()
-                        . $timestamp
-                    )
-                )
-            )
-        );
+
+        $authToken = base64_encode($this->getMerchantId() . ':' .
+            hash('sha512', $data . $this->getCheckoutSecret() . $timestamp));
+
+        // $authToken =  base64_encode(
+        //     $this->getMerchantId()
+        //     . ':'
+        //     . strtolower(
+        //         hash(
+        //             'sha512',
+        //             $data
+        //             . $this->getCheckoutSecret()
+        //             . $timestamp
+        //         )
+        //     )
+        // );
         return [
             'content-type' => 'application/json',
             'Authorization' => 'Svea ' . $authToken,

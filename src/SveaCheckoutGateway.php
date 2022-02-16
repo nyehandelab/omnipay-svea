@@ -45,17 +45,17 @@ class SveaCheckoutGateway extends AbstractGateway
 
     public function authorize(array $parameters = array())
     {
-        return $this->createRequest('\Nyehandel\Omnipay\Nets\Message\SveaCreateOrderRequest', $parameters);
+        return $this->createRequest('\Nyehandel\Omnipay\Svea\Message\SveaCreateOrderRequest', $parameters);
     }
 
     public function updateOrder(array $parameters = array())
     {
-        return $this->createRequest('\Nyehandel\Omnipay\Nets\Message\SveaUpdateOrderRequest', $parameters);
+        return $this->createRequest('\Nyehandel\Omnipay\Svea\Message\SveaUpdateOrderRequest', $parameters);
     }
 
     public function retrievePayment(array $parameters = array())
     {
-        return $this->createRequest('\Nyehandel\Omnipay\Nets\Message\SveaGetOrderRequest', $parameters);
+        return $this->createRequest('\Nyehandel\Omnipay\Svea\Message\SveaGetOrderRequest', $parameters);
     }
 
     public function purchase(array $parameters = array())
@@ -65,7 +65,7 @@ class SveaCheckoutGateway extends AbstractGateway
 
     public function completePurchase(array $parameters = array())
     {
-        return $this->createRequest('\Nyehandel\Omnipay\Nets\Message\NetsEasyFullChargePaymentRequest', $parameters);
+        // TODO: Implement completePurchase
     }
 
     public function refund(array $parameters = array())

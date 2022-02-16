@@ -5,6 +5,7 @@
 
 namespace Nyehandel\Omnipay\Svea\Message;
 
+use Nyehandel\Omnipay\Svea\SveaItemBag;
 use Omnipay\Common\ItemBag;
 use Psr\Http\Message\ResponseInterface;
 
@@ -82,31 +83,6 @@ abstract class AbstractOrderRequest extends AbstractRequest
         return $this->getTestMode() ? $this->testEndpoint : $this->liveEndpoint;
     }
 
-    protected function getHeaders()
-    {
-        //'Authorization' => $this->getSecretKey(),
-        // TODO: Examples does not use base16 (dehex) or lowercase (strtolower), so we might be able to remove them.
-        $timestamp = gmdate('Y-m-d H:i');
-        $authToken =  base64(
-            $this->getMerchantId()
-            . ':'
-            . dehex(
-                strtolower(
-                    hash(
-                        'sha512',
-                        $this->getCartData()
-                        . $this->getCheckoutSecret()
-                        . $timestamp
-                    )
-                )
-            )
-        );
-        return [
-            'content-type' => 'application/json',
-            'Authorization' => 'Svea ' . $authToken,
-        ];
-    }
-
     protected function createResponse($data)
     {
         return $this->response = new Response($this, $data);
@@ -120,7 +96,7 @@ abstract class AbstractOrderRequest extends AbstractRequest
     public function setItems($items)
     {
         if ($items && !$items instanceof ItemBag) {
-            $items = new NetsItemBag($items);
+            $items = new SveaItemBag($items);
         }
 
         return $this->setParameter('items', $items);

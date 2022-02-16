@@ -21,7 +21,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "Nyehandel\\Omnipay\\Nets\\" : "src/"
+            "Nyehandel\\Omnipay\\Svea\\" : "src/"
         }
     },
     "require": {

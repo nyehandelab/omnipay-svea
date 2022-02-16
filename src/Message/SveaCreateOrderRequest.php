@@ -19,8 +19,8 @@ class SveaCreateOrderRequest extends AbstractOrderRequest
             'clientOrderNumber',
             'checkoutUri',
             'confirmationUri',
-            'termsUrl',
-            'pushUrl',
+            'termsUri',
+            'pushUri',
         );
 
         $data = [
@@ -44,11 +44,6 @@ class SveaCreateOrderRequest extends AbstractOrderRequest
             'merchantData' => $this->getMerchantData(),
         ];
 
-        if ($this->getWebhooks()) {
-            $data['notifications'] = $this->getNotificationsData();
-        }
-
-
         return $data;
     }
 
@@ -70,6 +65,16 @@ class SveaCreateOrderRequest extends AbstractOrderRequest
     public function getCurrency()
     {
         return $this->getParameter('currency');
+    }
+
+    public function setLocale($value)
+    {
+        return $this->setParameter('locale', $value);
+    }
+
+    public function getLocale()
+    {
+        return $this->getParameter('locale');
     }
 
     public function setClientOrderNumber($value)
@@ -192,9 +197,10 @@ class SveaCreateOrderRequest extends AbstractOrderRequest
         $httpResponse = $this->httpClient->request(
             'POST',
             $this->getEndpoint(),
-            $this->getHeaders(),
+            $this->getHeaders(json_encode($data)),
             json_encode($data),
         );
+        dd($httpResponse, 'resbdy');
 
         return new SveaCreateOrderResponse(
             $this,
