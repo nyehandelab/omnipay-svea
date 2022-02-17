@@ -15,6 +15,7 @@ class SveaCreateOrderRequest extends AbstractOrderRequest
         $this->validate(
             'items',
             'currency',
+            'countryCode',
             'locale',
             'clientOrderNumber',
             'checkoutUri',
@@ -25,6 +26,7 @@ class SveaCreateOrderRequest extends AbstractOrderRequest
 
         $data = [
             'countryCode' => $this->getCountryCode(),
+            'locale' => $this->getLocale(),
             'currency' => $this->getCurrency(),
             'clientOrderNumber' => $this->getClientOrderNumber(),
             'merchantSettings' => [
@@ -38,7 +40,6 @@ class SveaCreateOrderRequest extends AbstractOrderRequest
             ],
             'cart' => $this->getCartData(),
             'presetValue' => $this->getPresetValues(),
-            'identityFlags' => [], // TODO: Implement this
             'requireElectronicIdAuthentication' => $this->getRequireElectronicIdAuthentication(),
             'partnerKey' => $this->getPartnerKey(),
             'merchantData' => $this->getMerchantData(),
@@ -57,16 +58,6 @@ class SveaCreateOrderRequest extends AbstractOrderRequest
         return $this->getParameter('countryCode');
     }
 
-    public function setCurrency($value)
-    {
-        return $this->setParameter('currency', $value);
-    }
-
-    public function getCurrency()
-    {
-        return $this->getParameter('currency');
-    }
-
     public function setLocale($value)
     {
         return $this->setParameter('locale', $value);
@@ -75,6 +66,16 @@ class SveaCreateOrderRequest extends AbstractOrderRequest
     public function getLocale()
     {
         return $this->getParameter('locale');
+    }
+
+    public function setCurrency($value)
+    {
+        return $this->setParameter('currency', $value);
+    }
+
+    public function getCurrency()
+    {
+        return $this->getParameter('currency');
     }
 
     public function setClientOrderNumber($value)
@@ -194,13 +195,14 @@ class SveaCreateOrderRequest extends AbstractOrderRequest
 
     public function sendData($data)
     {
+        $data = json_encode(self::formatData($data));
+
         $httpResponse = $this->httpClient->request(
             'POST',
             $this->getEndpoint(),
-            $this->getHeaders(json_encode($data)),
-            json_encode($data),
+            $this->getHeaders($data),
+            $data,
         );
-        dd($httpResponse, 'resbdy');
 
         return new SveaCreateOrderResponse(
             $this,

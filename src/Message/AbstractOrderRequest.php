@@ -41,7 +41,7 @@ abstract class AbstractOrderRequest extends AbstractRequest
 
         if ($items) {
             foreach ($items as $item) {
-                $cartData['items'] = [
+                $cartData['items'][] = [
                     'Name' => $item->getName(),
                     'Quantity' => $item->getQuantity(),
                     'UnitPrice' => $item->getPrice() + $item->getTaxAmount(),

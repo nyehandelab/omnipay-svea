@@ -14,8 +14,6 @@ use Psr\Http\Message\ResponseInterface;
  *
  * This class forms the base class for Svea Checkout requests.
  *
- * @link https://nets-devs.isotop.se/nets-easy/en-EU/docs/
- * @link http://paypal.github.io/sdk/
  */
 abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 {
@@ -23,6 +21,8 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
     protected $liveEndpoint = 'https://checkoutapi.svea.com';
     protected $testEndpoint = 'https://checkoutapistage.svea.com';
+
+    public $data;
 
     public function getMerchantId()
     {
@@ -97,30 +97,40 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
     protected function getHeaders(string $data)
     {
-        //'Authorization' => $this->getSecretKey(),
-        // TODO: Examples does not use base16 (dechex) or lowercase (strtolower), so we might be able to remove them.
         $timestamp = gmdate('Y-m-d H:i');
 
-        // 𝑏𝑎𝑠𝑒64(𝑢𝑡𝑓8({𝑐ℎ𝑒𝑐𝑘𝑜𝑢𝑡𝑚𝑒𝑟𝑐ℎ𝑎𝑛𝑡𝑖𝑑}:𝑏𝑎𝑠𝑒16(𝑙𝑜𝑤𝑒𝑟𝑐𝑎𝑠𝑒(𝑠ℎ𝑎512(𝑢𝑡𝑓8({𝑟𝑒𝑞𝑢𝑒𝑠𝑡𝑏𝑜𝑑𝑦}{𝑐ℎ𝑒𝑐𝑘𝑜𝑢𝑡𝑠𝑒𝑐𝑟𝑒𝑡}{𝑡𝑖𝑚𝑒𝑠𝑡𝑎𝑚𝑝}))))))
         $authToken = base64_encode($this->getMerchantId() . ':' .
-            strtolower(hash('sha512', $data . $this->getCheckoutSecret() . $timestamp)));
+            hash('sha512', $data . $this->getCheckoutSecret() . $timestamp));
 
-        // $authToken =  base64_encode(
-        //     $this->getMerchantId()
-        //     . ':'
-        //     . strtolower(
-        //         hash(
-        //             'sha512',
-        //             $data
-        //             . $this->getCheckoutSecret()
-        //             . $timestamp
-        //         )
-        //     )
-        // );
         return [
-            'content-type' => 'application/json',
+            'Content-type' => 'application/json',
             'Authorization' => 'Svea ' . $authToken,
+            'Timestamp' => $timestamp,
         ];
+    }
+
+    /**
+     * Lowercases all array data and remove all values that are set to null
+     *
+     * @param array $input
+     * @return array
+     */
+    protected static function formatData(array $input)
+    {
+        $return = array();
+
+        foreach ($input as $key => $value) {
+            $key = strtolower($key);
+
+            if (!is_null($value)) {
+                if (is_array($value)) {
+                    $value = self::formatData($value);
+                }
+                $return[$key] = $value;
+            }
+        }
+
+        return $return;
     }
 
     protected function createResponse($data)

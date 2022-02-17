@@ -3,9 +3,10 @@ declare(strict_types=1);
 
 namespace Nyehandel\Omnipay\Svea\Message;
 
+use Omnipay\Common\Message\AbstractResponse;
 use Omnipay\Common\Message\RequestInterface;
 
-abstract class AbstractResponse extends \Omnipay\Common\Message\AbstractResponse
+abstract class Response extends AbstractResponse
 {
     protected $statusCode;
 
