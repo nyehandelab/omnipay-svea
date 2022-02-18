@@ -2,8 +2,6 @@
 
 namespace Nyehandel\Omnipay\Svea;
 
-use Omnipay\Common\AbstractGateway;
-
 /**
  * Nets Easy Checkout Class
  */
@@ -14,61 +12,37 @@ class SveaCheckoutGateway extends AbstractGateway
         return 'Svea Checkout';
     }
 
-    public function getDefaultParameters()
-    {
-        return array(
-            'merchantId' => '',
-            'checkoutSecret' => '',
-            'testMode' => false,
-        );
-    }
-
-    public function getMerchantId()
-    {
-        return $this->getParameter('merchantId');
-    }
-
-    public function setMerchantId($value)
-    {
-        return $this->setParameter('merchantId', $value);
-    }
-
-    public function getCheckoutSecret()
-    {
-        return $this->getParameter('checkoutSecret');
-    }
-
-    public function setCheckoutSecret($value)
-    {
-        return $this->setParameter('checkoutSecret', $value);
-    }
-
-    public function authorize(array $parameters = array())
+    public function authorize(array $parameters = [])
     {
         return $this->createRequest('\Nyehandel\Omnipay\Svea\Message\SveaCreateOrderRequest', $parameters);
     }
 
-    public function updateOrder(array $parameters = array())
-    {
-        return $this->createRequest('\Nyehandel\Omnipay\Svea\Message\SveaUpdateOrderRequest', $parameters);
-    }
-
-    public function retrievePayment(array $parameters = array())
+    public function getOrder(array $parameters = [])
     {
         return $this->createRequest('\Nyehandel\Omnipay\Svea\Message\SveaGetOrderRequest', $parameters);
     }
 
-    public function purchase(array $parameters = array())
+    public function updateOrder(array $parameters = [])
+    {
+        return $this->createRequest('\Nyehandel\Omnipay\Svea\Message\SveaUpdateOrderRequest', $parameters);
+    }
+
+    public function retrievePayment(array $parameters = [])
+    {
+        return $this->createRequest('\Nyehandel\Omnipay\Svea\Message\SveaGetOrderRequest', $parameters);
+    }
+
+    public function purchase(array $parameters = [])
     {
         // TODO: Implement paritital purchase
     }
 
-    public function completePurchase(array $parameters = array())
+    public function completePurchase(array $parameters = [])
     {
         // TODO: Implement completePurchase
     }
 
-    public function refund(array $parameters = array())
+    public function refund(array $parameters = [])
     {
         // TODO: Implement refund
     }

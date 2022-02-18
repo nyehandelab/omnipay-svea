@@ -11,14 +11,6 @@ final class SveaUpdateOrderResponse extends Response implements RedirectResponse
     /**
      * @inheritDoc
      */
-    public function __construct(RequestInterface $request, $data)
-    {
-        parent::__construct($request, $data);
-    }
-
-    /**
-     * @inheritDoc
-     */
     public function isSuccessful(): bool
     {
         return $this->getCode() == 200;

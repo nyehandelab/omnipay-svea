@@ -82,9 +82,20 @@ class SveaItem extends Item
         return $this->setParameter('discountPercent', $value);
     }
 
+    public function getMerchantData()
+    {
+        return $this->getParameter('merchantData');
+    }
+
+    public function setMerchantData($value)
+    {
+
+        return $this->setParameter('merchantData', $value);
+    }
+
     public function getTaxAmount(): int
     {
-        return (int) $this->getPrice() * $this->getVatPercent() * $this->getQuantity() / (100 * 100);
+        return (int) $this->getPrice() * $this->getVatPercent() / (100 * 100);
     }
 
     public function getNetTotalAmount(): int

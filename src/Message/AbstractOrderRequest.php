@@ -50,6 +50,7 @@ abstract class AbstractOrderRequest extends AbstractRequest
                     'DiscountAmount' => $item->getDiscountAmount(),
                     'VatPercent' => $item->getVatPercent(),
                     'unit' => $item->getUnit(),
+                    'MerchantData' => $item->getMerchantData(),
                 ];
             }
         }

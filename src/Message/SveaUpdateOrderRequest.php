@@ -28,13 +28,19 @@ class SveaUpdateOrderRequest extends AbstractOrderRequest
 
     public function sendData($data)
     {
+        $data = json_encode(self::formatData($data));
+
         $httpResponse = $this->httpClient->request(
             'PUT',
             $this->getEndpoint(),
-            $this->getHeaders(),
-            json_encode($data),
+            $this->getHeaders($data),
+            $data,
         );
 
-        return new SveaUpdateOrderResponse($this, $this->getResponseBody($httpResponse));
+        return new SveaUpdateOrderResponse(
+            $this,
+            $this->getResponseBody($httpResponse),
+            $httpResponse->getStatusCode()
+        );
     }
 }
