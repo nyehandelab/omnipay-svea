@@ -2,20 +2,22 @@
 
 namespace Nyehandel\Omnipay\Svea\Message;
 
-use Nyehandel\Omnipay\Svea\Message\AbstractOrderRequest;
+use Nyehandel\Omnipay\Svea\SveaWebhookBag;
+use Omnipay\Common\ItemBag;
 
 /**
- * Nets Easy Checkout Authorize Request
+ * Svea Checkout Authorize Request
  */
-class SveaUpdateOrderRequest extends AbstractCheckoutOrderRequest
+class SveaCancelOrderRequest extends AbstractAdminRequest
 {
     public function getData()
     {
-        $this->validate('items');
+        $this->validate(
+            'orderId',
+        );
 
         $data = [
-            'cart' => $this->getCartData(),
-            'merchantData' => $this->getMerchantData(),
+            'IsCancelled' => 'true',
         ];
 
         return $data;
@@ -23,7 +25,12 @@ class SveaUpdateOrderRequest extends AbstractCheckoutOrderRequest
 
     public function getEndpoint()
     {
-        return parent::getEndpoint() . '/api/orders/' . $this->getPaymentId();
+        return parent::getEndpoint() . '/api/v1/orders/' . $this->getOrderId();
+    }
+
+    protected function getHttpMethod()
+    {
+        return 'PATCH';
     }
 
     public function sendData($data)
@@ -31,13 +38,13 @@ class SveaUpdateOrderRequest extends AbstractCheckoutOrderRequest
         $data = json_encode(self::formatData($data));
 
         $httpResponse = $this->httpClient->request(
-            'PUT',
+            'POST',
             $this->getEndpoint(),
             $this->getHeaders($data),
             $data,
         );
 
-        return new SveaUpdateOrderResponse(
+        return new SveaCreateOrderResponse(
             $this,
             $this->getResponseBody($httpResponse),
             $httpResponse->getStatusCode()

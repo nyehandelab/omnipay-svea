@@ -5,7 +5,7 @@ namespace Nyehandel\Omnipay\Svea\Message;
 /**
  * Svea Checkout Authorize Request
  */
-class SveaGetOrderRequest extends AbstractRequest
+class SveaGetOrderRequest extends AbstractCheckoutRequest
 {
     public function getData()
     {

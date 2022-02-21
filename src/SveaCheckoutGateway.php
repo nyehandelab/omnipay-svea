@@ -32,14 +32,19 @@ class SveaCheckoutGateway extends AbstractGateway
         return $this->createRequest('\Nyehandel\Omnipay\Svea\Message\SveaGetOrderRequest', $parameters);
     }
 
-    public function purchase(array $parameters = [])
+    public function capture(array $parameters = [])
     {
-        // TODO: Implement paritital purchase
+        return $this->createRequest('\Nyehandel\Omnipay\Svea\Message\SveaDeliverOrderRequest', $parameters);
     }
 
     public function completePurchase(array $parameters = [])
     {
         // TODO: Implement completePurchase
+    }
+
+    public function cancel(array $parameters = [])
+    {
+        return $this->createRequest('\Nyehandel\Omnipay\Svea\Message\SveaCancelOrderRequest', $parameters);
     }
 
     public function refund(array $parameters = [])

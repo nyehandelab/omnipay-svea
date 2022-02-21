@@ -8,7 +8,7 @@ use Omnipay\Common\ItemBag;
 /**
  * Svea Checkout Authorize Request
  */
-class SveaCreateOrderRequest extends AbstractOrderRequest
+class SveaCreateOrderRequest extends AbstractCheckoutOrderRequest
 {
     public function getData()
     {

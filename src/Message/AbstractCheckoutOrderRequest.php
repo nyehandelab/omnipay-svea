@@ -17,7 +17,7 @@ use Psr\Http\Message\ResponseInterface;
  * @link https://checkoutapi.svea.com/docs/#/data-types?id=createordermodel
  * @link https://checkoutapi.svea.com/docs/#/data-types?id=updateordermodel
  */
-abstract class AbstractOrderRequest extends AbstractRequest
+abstract class AbstractCheckoutOrderRequest extends AbstractCheckoutRequest
 {
     public function setMerchantData($value)
     {
@@ -27,11 +27,6 @@ abstract class AbstractOrderRequest extends AbstractRequest
     public function getMerchantData()
     {
         return $this->getParameter('merchantData');
-    }
-
-    protected function getBaseData()
-    {
-        return [];
     }
 
     protected function getCartData()
@@ -56,37 +51,6 @@ abstract class AbstractOrderRequest extends AbstractRequest
         }
 
         return $cartData;
-    }
-
-    public function sendData($data)
-    {
-        $httpResponse = $this->httpClient->request('POST', $this->getEndpoint(), [], http_build_query($data));
-
-        return $this->createResponse($httpResponse->getBody()->getContents());
-    }
-
-    /**
-     * @param ResponseInterface $response
-     *
-     * @return array
-     */
-    protected function getResponseBody(ResponseInterface $response): array
-    {
-        try {
-            return \json_decode($response->getBody()->getContents(), true);
-        } catch (\TypeError $exception) {
-            return [];
-        }
-    }
-
-    protected function getEndpoint()
-    {
-        return $this->getTestMode() ? $this->testEndpoint : $this->liveEndpoint;
-    }
-
-    protected function createResponse($data)
-    {
-        return $this->response = new Response($this, $data);
     }
 
     /**
