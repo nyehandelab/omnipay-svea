@@ -39,7 +39,7 @@ class SveaCreateOrderRequest extends AbstractCheckoutOrderRequest
                 'PromotedPartPaymentCampaign' => $this->getPromotedPartPaymentCampaign(),
             ],
             'cart' => $this->getCartData(),
-            'presetValue' => $this->getPresetValues(),
+            'presetValues' => $this->getPresetValues(),
             'requireElectronicIdAuthentication' => $this->getRequireElectronicIdAuthentication(),
             'partnerKey' => $this->getPartnerKey(),
             'merchantData' => $this->getMerchantData(),
