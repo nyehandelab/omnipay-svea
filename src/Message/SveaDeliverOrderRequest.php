@@ -89,7 +89,7 @@ class SveaDeliverOrderRequest extends AbstractAdminRequest
             $data,
         );
 
-        return new SveaCreateOrderResponse(
+        return new SveaDeliverOrderResponse(
             $this,
             $this->getResponseBody($httpResponse),
             $httpResponse->getStatusCode()
