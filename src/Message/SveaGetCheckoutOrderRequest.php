@@ -5,7 +5,7 @@ namespace Nyehandel\Omnipay\Svea\Message;
 /**
  * Svea Checkout Authorize Request
  */
-class SveaGetOrderRequest extends AbstractCheckoutRequest
+class SveaGetCheckoutOrderRequest extends AbstractCheckoutRequest
 {
     public function getData()
     {
@@ -27,7 +27,7 @@ class SveaGetOrderRequest extends AbstractCheckoutRequest
             $this->getHeaders(),
         );
 
-        return new SveaGetOrderResponse(
+        return new SveaGetCheckoutOrderResponse(
             $this,
             $this->getResponseBody($httpResponse),
             $httpResponse->getStatusCode()

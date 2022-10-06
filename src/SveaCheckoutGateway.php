@@ -19,7 +19,7 @@ class SveaCheckoutGateway extends AbstractGateway
 
     public function getOrder(array $parameters = [])
     {
-        return $this->createRequest('\Nyehandel\Omnipay\Svea\Message\SveaGetOrderRequest', $parameters);
+        return $this->createRequest('\Nyehandel\Omnipay\Svea\Message\SveaGetCheckoutOrderRequest', $parameters);
     }
 
     public function updateOrder(array $parameters = [])
@@ -29,7 +29,7 @@ class SveaCheckoutGateway extends AbstractGateway
 
     public function retrievePayment(array $parameters = [])
     {
-        return $this->createRequest('\Nyehandel\Omnipay\Svea\Message\SveaGetOrderRequest', $parameters);
+        return $this->createRequest('\Nyehandel\Omnipay\Svea\Message\SveaGetCheckoutOrderRequest', $parameters);
     }
 
     public function capture(array $parameters = [])

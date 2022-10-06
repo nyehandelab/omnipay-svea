@@ -5,7 +5,7 @@ namespace Nyehandel\Omnipay\Svea\Message;
 
 use Omnipay\Common\Message\RedirectResponseInterface;
 
-final class SveaGetOrderResponse extends Response implements RedirectResponseInterface
+final class SveaGetCheckoutOrderResponse extends Response implements RedirectResponseInterface
 {
 
     /**
