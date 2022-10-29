@@ -39,7 +39,7 @@ abstract class AbstractCheckoutOrderRequest extends AbstractCheckoutRequest
                 $cartData['items'][] = [
                     'Name' => $item->getName(),
                     'Quantity' => $item->getQuantity(),
-                    'UnitPrice' => $item->getPrice() + $item->getTaxAmount(),
+                    'UnitPrice' => $item->getPrice(), // should include vat
                     'ArticleNumber' => $item->getArticleNumber(),
                     'DiscountPercent' => $item->getDiscountPercent(),
                     'DiscountAmount' => $item->getDiscountAmount(),
