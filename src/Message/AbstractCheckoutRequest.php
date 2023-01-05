@@ -55,6 +55,6 @@ abstract class AbstractCheckoutRequest extends AbstractRequest
 
     protected function createResponse($data)
     {
-        return $this->response = new Response($this, $data);
+        return $this->response = new SveaGetCheckoutOrderResponse($this, $data);
     }
 }

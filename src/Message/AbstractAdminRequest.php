@@ -30,4 +30,42 @@ abstract class AbstractAdminRequest extends AbstractRequest
     {
         return $this->getParameter('orderId');
     }
+
+    protected function getOrderItems()
+    {
+        $orderItems = [];
+        $items = $this->getItems();
+
+        if ($items) {
+            foreach ($items as $item) {
+                $orderItems[] = [
+                    'Name' => $item->getName(),
+                    'Quantity' => $item->getQuantity(),
+                    'UnitPrice' => $item->getPrice(), // should include vat
+                    'ArticleNumber' => $item->getArticleNumber(),
+                    'DiscountPercent' => $item->getDiscountPercent(),
+                    'DiscountAmount' => $item->getDiscountAmount(),
+                    'VatPercent' => $item->getVatPercent(),
+                    'unit' => $item->getUnit(),
+                    'MerchantData' => $item->getMerchantData(),
+                ];
+            }
+        }
+
+        return $orderItems;
+    }
+
+    /**
+     * Set the items in this order
+     *
+     * @param ItemBag|array $items An array of items in this order
+     */
+    public function setItems($items)
+    {
+        if ($items && !$items instanceof ItemBag) {
+            $items = new SveaItemBag($items);
+        }
+
+        return $this->setParameter('items', $items);
+    }
 }

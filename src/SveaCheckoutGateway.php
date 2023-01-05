@@ -27,6 +27,11 @@ class SveaCheckoutGateway extends AbstractGateway
         return $this->createRequest('\Nyehandel\Omnipay\Svea\Message\SveaGetAdminOrderRequest', $parameters);
     }
 
+    public function adminReplaceOrderRows(array $parameters = [])
+    {
+        return $this->createRequest('\Nyehandel\Omnipay\Svea\Message\SveaAdminReplaceOrderRowsRequest', $parameters);
+    }
+
     public function updateOrder(array $parameters = [])
     {
         return $this->createRequest('\Nyehandel\Omnipay\Svea\Message\SveaUpdateOrderRequest', $parameters);
