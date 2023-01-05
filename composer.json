@@ -28,9 +28,6 @@
         "omnipay/common": "^3"
     },
     "require-dev": {
-        "omnipay/tests": "^3",
-        "squizlabs/php_codesniffer": "^3",
-        "phpro/grumphp": "^0.14"
     },
     "extra": {
         "branch-alias": {
