@@ -4,6 +4,7 @@ namespace Nyehandel\Omnipay\Svea\Message;
 
 use Nyehandel\Omnipay\Svea\SveaWebhookBag;
 use Omnipay\Common\ItemBag;
+use Omnipay\Common\Exception\InvalidResponseException;
 
 /**
  * Svea Checkout Authorize Request
