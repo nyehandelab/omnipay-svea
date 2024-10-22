@@ -204,6 +204,25 @@ class SveaCreateOrderRequest extends AbstractCheckoutOrderRequest
             $data,
         );
 
+        if ($httpResponse->getStatusCode() >= 400) {
+            $errorMessage = '';
+            $errorResponseBody = $this->getResponseBody($httpResponse);
+            $headers = $httpResponse->getHeaders();
+
+            if (count($errorResponseBody)) {
+                $errorMessage = $errorResponseBody;
+            } else if (array_key_exists('errormessage', $headers)) {
+                $errorMessage = $headers['errormessage'];
+            } else {
+                $errorMessage = 'Undefined error occurred. HTTP status code: ' . $httpResponse->getStatusCode();
+
+            }
+
+            throw new InvalidResponseException(
+                \sprintf('Reason: (%s)', json_encode($errorMessage))
+            );
+        }
+
         return new SveaCreateOrderResponse(
             $this,
             $this->getResponseBody($httpResponse),
